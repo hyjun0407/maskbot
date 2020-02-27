@@ -2,11 +2,13 @@ from urllib.request import Request, urlopen
 from bs4 import BeautifulSoup
 import asyncio
 import discord
+import os
 
 client = discord.Client()
 
 # 1-6에서 생성된 토큰을 이곳에 입력해주세요.
-token = "NjgyNTQ3NzgwMjYyMjk3NjI2.XleuMQ.hF5OCzKlflJKUTQ3YyKYrvhVb9k"
+access_token = os.environ["BOT_TOKEN"]
+token = access_token
 
 # 봇이 구동되었을 때 동작되는 코드입니다.
 @client.event
