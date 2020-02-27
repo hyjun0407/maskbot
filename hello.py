@@ -1,49 +1,22 @@
 from urllib.request import Request, urlopen
 from bs4 import BeautifulSoup
-import asyncio
-import discord
 import os
+import time
+import telegram
+import lxml
+# 토큰을 지정해서 bot을 선언해 줍시다! (물론 이 토큰은 dummy!)
+bot = telegram.Bot('1135279699:AAHMNoTLwbHc1ytS7sNTIS0KKgyhbaD-k5I')
+# 우선 테스트 봇이니까 가장 마지막으로 bot에게 말을 건 사람의 id를 지정해줄게요.
+# 만약 IndexError 에러가 난다면 봇에게 메시지를 아무거나 보내고 다시 테스트해보세요.
+chat_id = bot.getUpdates()[-1].message.chat.id
 
-client = discord.Client()
 
-# 1-6에서 생성된 토큰을 이곳에 입력해주세요.
-access_token = os.environ["BOT_TOKEN"]
-token = access_token
-
-# 봇이 구동되었을 때 동작되는 코드입니다.
-@client.event
-async def on_ready():
-    print("Logged in as ") #화면에 봇의 아이디, 닉네임이 출력됩니다.
-    print(client.user.name)
-    print(client.user.id)
-    print("===========")
-    # 디스코드에는 현재 본인이 어떤 게임을 플레이하는지 보여주는 기능이 있습니다.
-    # 이 기능을 사용하여 봇의 상태를 간단하게 출력해줄 수 있습니다.
-    await client.change_presence(game=discord.Game(name="반갑습니다 :D", type=1))
-
-url = "https://smartstore.naver.com/kumaelectron/products/4754238400"
-html = urlopen(url).read().decode("utf-8")
-soup = BeautifulSoup(html, "html.parser")
-search = "not_goods"
 while True:
-if search in html:
-  await client.send_message(channel, "<@" + id + ">님이 \"" + message.content + "\"라고 말하였습니다.")
-
-else:
-  @client.event
-  async def on_message(message):
-    if message.author.bot:  # 만약 메시지를 보낸사람이 봇일 경우에는
-      return None  # 동작하지 않고 무시합니다.
-
-    id = message.author.id  # id라는 변수에는 메시지를 보낸사람의 ID를 담습니다.
-    channel = message.channel  # channel이라는 변수에는 메시지를 받은 채널의 ID를 담습니다.
-
-    client.send_message(channel, "마스크생김 이새끼야")
-    if message.content.startswith('!커맨드'):  # 만약 해당 메시지가 '!커맨드' 로 시작하는 경우에는
-      await client.send_message(channel, '커맨드')  # 봇은 해당 채널에 '커맨드' 라고 말합니다.
-    else:  # 위의 if에 해당되지 않는 경우
-      # 메시지를 보낸사람을 호출하며 말한 메시지 내용을 그대로 출력해줍니다.
-      await client.send_message(channel, "<@" + id + ">님이 \"" + message.content + "\"라고 말하였습니다.")
-
-
-  client.run(access_token)
+    url = "https://smartstore.naver.com/kumaelectron/products/4754238400"
+    html = urlopen(url).read().decode("utf-8")
+    soup = BeautifulSoup(html, "lxml")
+    search = "not_goods"
+    if search in html:
+        bot.sendMessage(chat_id=chat_id, text='마스크가 안와써요')
+    else:
+        bot.sendMessage(chat_id=chat_id, text='마스크가 이써요 빨리 접속 ㄱㄱ')
