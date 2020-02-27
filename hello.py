@@ -27,7 +27,7 @@ soup = BeautifulSoup(html, "html.parser")
 search = "not_goods"
 while True:
 if search in html:
-  print("Okay")
+  await client.send_message(channel, "<@" + id + ">님이 \"" + message.content + "\"라고 말하였습니다.")
 
 else:
   @client.event
@@ -46,4 +46,4 @@ else:
       await client.send_message(channel, "<@" + id + ">님이 \"" + message.content + "\"라고 말하였습니다.")
 
 
-  client.run(token)
+  client.run(access_token)
